@@ -3,7 +3,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/contexts/CartContext';
-import { Plus } from 'lucide-react';
+import { Plus, Minus, Check } from 'lucide-react';
+import { toast } from 'sonner';
 
 type ProductCardProps = {
   id: number;
@@ -14,10 +15,18 @@ type ProductCardProps = {
 };
 
 const ProductCard = ({ id, name, description, price, image }: ProductCardProps) => {
-  const { addItem } = useCart();
+  const { addItem, updateQuantity, items } = useCart();
+  
+  const existingItem = items.find(item => item.id === id);
+  const quantity = existingItem ? existingItem.quantity : 0;
   
   const handleAddToCart = () => {
     addItem({ id, name, price, image });
+    toast.success(`${name} adicionado ao carrinho`);
+  };
+  
+  const handleUpdateQuantity = (newQuantity: number) => {
+    updateQuantity(id, newQuantity);
   };
   
   return (
@@ -40,13 +49,35 @@ const ProductCard = ({ id, name, description, price, image }: ProductCardProps) 
         </Link>
         <div className="flex justify-between items-center">
           <span className="text-fast-red font-bold">R$ {price.toFixed(2)}</span>
-          <Button 
-            onClick={handleAddToCart} 
-            size="sm" 
-            className="bg-fast-yellow text-fast-brown hover:bg-amber-400 rounded-full w-8 h-8 p-0"
-          >
-            <Plus size={16} />
-          </Button>
+          
+          {quantity === 0 ? (
+            <Button 
+              onClick={handleAddToCart} 
+              size="sm" 
+              className="bg-fast-yellow text-fast-brown hover:bg-amber-400 rounded-full w-8 h-8 p-0"
+            >
+              <Plus size={16} />
+            </Button>
+          ) : (
+            <div className="flex items-center gap-1 bg-gray-100 rounded-full">
+              <Button 
+                onClick={() => handleUpdateQuantity(quantity - 1)} 
+                size="sm" 
+                variant="ghost" 
+                className="rounded-full w-7 h-7 p-0 text-gray-600"
+              >
+                <Minus size={14} />
+              </Button>
+              <span className="w-5 text-center text-sm">{quantity}</span>
+              <Button 
+                onClick={() => handleUpdateQuantity(quantity + 1)} 
+                size="sm" 
+                className="bg-fast-yellow text-fast-brown hover:bg-amber-400 rounded-full w-7 h-7 p-0"
+              >
+                <Plus size={14} />
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </div>
