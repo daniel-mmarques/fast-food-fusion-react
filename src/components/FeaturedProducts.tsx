@@ -1,7 +1,7 @@
 
 import React from 'react';
 import ProductCard from './ProductCard';
-import { Utensils, Coffee, Pizza } from 'lucide-react';
+import { Utensils, Coffee, Pizza, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
@@ -43,13 +43,19 @@ const featuredProducts = [
 
 const FeaturedProducts = () => {
   return (
-    <section className="py-12 bg-gray-50">
+    <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-10">
-          <h2 className="text-3xl font-bold text-fast-brown mb-2">Mais Pedidos</h2>
-          <p className="text-gray-600 max-w-md mx-auto">
-            Conheça os lanches favoritos dos nossos clientes
-          </p>
+        <div className="flex justify-between items-center mb-8">
+          <div>
+            <span className="text-fast-red font-medium">Mais pedidos</span>
+            <h2 className="text-3xl font-bold text-gray-900 mt-1">Populares</h2>
+          </div>
+          
+          <Button asChild variant="link" className="text-fast-red hover:text-fast-red/80">
+            <Link to="/menu" className="flex items-center">
+              Ver todos <ArrowRight size={16} className="ml-1" />
+            </Link>
+          </Button>
         </div>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -63,12 +69,6 @@ const FeaturedProducts = () => {
               image={product.image}
             />
           ))}
-        </div>
-        
-        <div className="text-center mt-10">
-          <Button asChild className="bg-fast-yellow text-fast-brown hover:bg-amber-400">
-            <Link to="/menu">Ver Cardápio Completo</Link>
-          </Button>
         </div>
       </div>
     </section>

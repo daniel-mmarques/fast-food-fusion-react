@@ -21,18 +21,20 @@ const ProductCard = ({ id, name, description, price, image }: ProductCardProps) 
   };
   
   return (
-    <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
-      <Link to={`/product/${id}`} className="block">
-        <img 
-          src={image} 
-          alt={name} 
-          className="w-full h-48 object-cover"
-        />
+    <div className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100">
+      <Link to={`/product/${id}`} className="block relative overflow-hidden">
+        <div className="aspect-square overflow-hidden">
+          <img 
+            src={image} 
+            alt={name} 
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+        </div>
       </Link>
       <div className="p-4">
         <Link to={`/product/${id}`} className="block">
-          <h3 className="text-lg font-bold mb-1 text-fast-brown">{name}</h3>
-          <p className="text-gray-600 text-sm mb-3 h-12 overflow-hidden">
+          <h3 className="text-lg font-semibold mb-1 text-gray-800 group-hover:text-fast-red transition-colors">{name}</h3>
+          <p className="text-gray-600 text-sm mb-3 h-12 line-clamp-2 overflow-hidden">
             {description}
           </p>
         </Link>
@@ -41,9 +43,9 @@ const ProductCard = ({ id, name, description, price, image }: ProductCardProps) 
           <Button 
             onClick={handleAddToCart} 
             size="sm" 
-            className="bg-fast-yellow text-fast-brown hover:bg-amber-400"
+            className="bg-fast-yellow text-fast-brown hover:bg-amber-400 rounded-full w-8 h-8 p-0"
           >
-            <Plus size={16} className="mr-1" /> Adicionar
+            <Plus size={16} />
           </Button>
         </div>
       </div>
